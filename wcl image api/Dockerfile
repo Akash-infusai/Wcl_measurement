@@ -1,5 +1,5 @@
 # Use an official Python runtime as a parent image
-FROM python:3.11
+FROM python:3.11 AS bacend
 
 # Set environment variables (optional)
 ENV PYTHONUNBUFFERED=1 \
@@ -17,8 +17,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code into the container
 COPY . /app/
 
+FROM python:3.11-slim 
+
+WORKDIR /app
+
 # Expose the port your application runs on (if needed)
-EXPOSE 8000
+EXPOSE 8002
 
 # Command to run the application
 CMD ["python", "object_measurement.py"]
